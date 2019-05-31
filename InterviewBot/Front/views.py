@@ -198,8 +198,8 @@ def Interview(request,pk,comp_pk,count=0):
     else:
         count+=1
         ques_audio=gTTS(questions1[count-1])
-        file_loc='static/'+str(count-1)+'.mp3'
-        file_name=str(count-1)+'.mp3'
+        file_loc='static/'+str(user.username)+str(count-1)+'.mp3'
+        file_name=str(user.username)+str(count-1)+'.mp3'
         ques_audio.save(file_loc)
         return render(request,'Interview.html',{'questions1':questions1[count-1],'c':count,'file_name':file_name,'company':company})
 
