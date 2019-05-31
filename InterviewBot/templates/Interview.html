@@ -1,19 +1,55 @@
 {% extends 'basic.html' %}
 {% block body_block %}
+{% load static %}
+
+<h1 class="bg-success"><center>Interview :<strong> {{company.Company_name}}</strong></center></h1>
+<h5 class="bg-warning"><center><strong>For {{company.Position}} Post</strong></center></h5>
 <div class="jumbotron">
-  <form method="POST" action="{% url 'Interview' count=c %}">
+
+  <audio autoplay>
+  <source src="{% static "" %}{{ file_name }}" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+  <form method="POST" action="{% url 'Interview' count=c pk=user.pk comp_pk=company.pk %}">
     {% csrf_token %}
-    <label for="question">Answer this question!!!</label>
+    <label for="question">Answer this question {{user.first_name}} !!!</label>
     <br>
     <h3>Question : <strong>{{ questions1 }}</strong></h3>
-    <textarea name="answer" rows="8" cols="80"></textarea>
+    <textarea id='btnGiveCommand' name="answer" rows="8" cols="80"></textarea>
     <br>
     <input type="submit" name="" value="Next" class="btn btn-success">
 
 
+
   </form>
 
-
-
+<!---<button id='btnGiveCommand' class="btn btn-link">									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>								</button>
+--->
 </div>
+<script>
+    var message = document.querySelector('#message');
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+    var grammar = '#JSGF V1.0;'
+    var recognition = new SpeechRecognition();
+    var speechRecognitionList = new SpeechGrammarList();
+    speechRecognitionList.addFromString(grammar, 1);
+    recognition.grammars = speechRecognitionList;
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.onresult = function(event) {
+        var last = event.results.length - 1;
+        var command = event.results[last][0].transcript;
+        btnGiveCommand.textContent = btnGiveCommand.textContent+' '+command;
+    };
+    recognition.onspeechend = function() {
+        recognition.stop();
+    };
+    recognition.onerror = function(event) {
+        message.textContent = 'Error occurred in recognition: ' + event.error;
+    }
+    document.querySelector('#btnGiveCommand').addEventListener('click', function(){
+        recognition.start();
+    });
+</script>
 {% endblock %}

@@ -2,9 +2,10 @@
 {% block body_block %}
 <div class="jumbotron">
   {% if user.is_authenticated %}
-  <h1>Welcome to Interview Bot, {{user.username}}</h1>
+  <h1>Welcome to Interview Bot, {{user.first_name}} {{user.last_name}}.</h1>
+
   <br>
-  <a href="{% url 'Interview' count=0 %}"  class='btn btn-warning'>Start Interview</a>
+  <a href="{% url 'Interview' count=0 pk=user.pk comp_pk=1 %}"  class='btn btn-warning'>Start Interview</a>
   {% else %}
   <h1>Welcome to Interview Bot,</h1>
   <p>For sign up and Registration press the Registration button on navigation bar and after completing that step go to Login Page and start your interview and please share your experience with us and your result will be avialable to you soon.</p>
@@ -18,5 +19,14 @@
   Student of Meerut Institute of engineering & technology
   B.tech Computer Science 4th year
 </p>
+{% if user.is_authenticated %}
+<h3><strong>Jobs:</strong> </h3>
+{% for company in cp %}
+<h4>In {{ company.Company_name }} for the post of {{ company.Position }}. </h4>
+<a href="{% url 'description' pk=company.pk %}"  class='btn btn-primary'>{{company.Company_name}} : {{company.Position}}</a>
+{% endfor %}
+<br>
 
+
+{% endif %}
 {% endblock %}

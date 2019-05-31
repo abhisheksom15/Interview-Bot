@@ -24,6 +24,8 @@ urlpatterns = [
     path('Front/',include('Front.urls')),
     path('special/',views.special,name="special"),
     path('logout/',views.user_logout,name="logout"),
-    path('Interview/<int:count>',views.Interview,name='Interview'),
-    path('complete',views.complete,name='complete')
+    path('Interview/<int:count>/<int:pk>/<int:comp_pk>',views.Interview,name='Interview'),
+    path('complete/<int:pk>',views.complete,name='complete'),
+    path('description/<int:pk>',views.description,name='description'),
+    path('result/<int:pk_cp>',views.score,name='result')
 ]

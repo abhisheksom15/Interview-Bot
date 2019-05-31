@@ -1,0 +1,57 @@
+{% extends 'basic.html' %}
+{% block body_block %}
+<style>
+table, th, td {
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+</style>
+<h1><strong>Job Description:</strong> </h1>
+<h4>
+<table width="100%" height="300">
+  <tr>
+    <td><strong>Company Name: </strong></td>
+    <td class="text-success">{{company.Company_name}}</td>
+  </tr>
+<tr>
+<td> </td>
+</tr>
+  <tr>
+    <td><strong> Position: </strong></td>
+    <td class="text-success"> {{company.Position}} </td>
+  </tr>
+
+  <tr>
+<td> </td>
+<td> </td>
+  </tr>
+  <tr>
+    <td><strong>Salary: </strong></td>
+    <td class="text-success"> {{company.salary_in_rupees}} rupees CTC </td>
+    </tr>
+  <tr>
+<td> </td>
+<td> </td>
+  </tr>
+  <tr>
+    <td><strong>Experience required:</strong> </td>
+    <td class="text-success"> {{company.min_experience_in_years}} years or above </td>
+  </tr>
+  <tr>
+<td> </td>
+<td> </td>
+  </tr>
+  <tr>
+    <td> <strong>Description of company: </strong> </td>
+    <td class="text-success"> {{company.Discreption}}</td>
+  </tr>
+  </h4>
+</table>
+<br>
+<a href="{% url 'Interview' count=0 pk=user.pk comp_pk=company.pk %}"  class='btn btn-warning'>Start Interview</a>
+<a href="{% url 'welcome' %}" class="btn btn-danger">Back</a>
+<a href="{% url 'result' pk_cp=company.pk %}" class="btn btn-success">Results</a>
+{% endblock %}
